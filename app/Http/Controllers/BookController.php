@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book as Book;
 use App\Models\Author as Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AuthorController extends Controller
+class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,9 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
+        $books = Book::all();
 
-        return view('authors.index', ['authors' => $authors]);
+        return view('books.index', ['books' => $books]);
     }
 
     /**
@@ -25,8 +26,11 @@ class AuthorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-        return view('authors.create');
+    public function create()
+    {
+        $authors = Author::all();
+
+        return view('books.create', ['authors' =>$authors]);
     }
 
     /**
@@ -35,49 +39,48 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|email|unique:authors',
+            'title' => 'required',
+            'pages' => 'required|integer',
+            'author_id' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('authors/create')
+            return redirect('books/create')
                         ->withErrors($validator)
                         ->withInput();
         }
 
-        $author = Author::create([
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
-            'email' => $request->email
+        $book = Book::create([
+            'title' => $request->title,
+            'pages' => $request->pages,
+            'author_id' => $request->author_id
         ]);
-
-        if ($author) {
-            return redirect()->back();
-        }
         
+        if ($book) {
+            return view('books.index');
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Author $author)
-    {
-        //
+    public function show(Book $book) {
+        return view('books.show', ['book' => $book]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function edit(Author $author)
+    public function edit(Book $book)
     {
         //
     }
@@ -86,10 +89,10 @@ class AuthorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Author $author)
+    public function update(Request $request, Book $book)
     {
         //
     }
@@ -97,11 +100,15 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Author  $author
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Author $author)
-    {
-        //
+    public function destroy(Book $book) {
+        $delete = $book->delete();
+
+        if ($delete) {
+            return redirect('books');
+        }
+        return redirect()->back();
     }
 }

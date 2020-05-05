@@ -13,14 +13,25 @@
                             {{ session('status') }}
                         </div>
                     @endif
+                    
+                    <div class="row">
+                        <div class="pull-left mx-4"><a href="/authors/create"><button class="btn btn-primary">Add Author</button></a></div>
+                        <br><br><br><br>
+                        <div class="pull-right"><a href="/books/create"><button class="btn btn-primary">Add Book</button></a></div>
+                    </div>
 
-                    You are logged in!
+                    <div class="row">
+                        <div class="pull-left mx-4"><a href="{{route('authors.index')}}"><button class="btn btn-success">View Authors</button></a></div>
+                        <br><br><br><br>
+                        <div class="pull-right"><a href="{{route('books.index')}}"><button class="btn btn-success">View Books</button></a></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row justify-content-center">
-        <a href="/authors/create">Add Author</a>
+        
+        
     </div>
 </div>
 @endsection
