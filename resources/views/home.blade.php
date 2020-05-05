@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <a href="/author/create">Add Author</a>
+        <a href="/authors/create">Add Author</a>
     </div>
 </div>
 @endsection

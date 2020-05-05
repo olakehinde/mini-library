@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use Illuminate\Http\Request;
 
-class Author extends Controller
+class AuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +22,8 @@ class Author extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('create-author');
     }
 
     /**

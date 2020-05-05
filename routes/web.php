@@ -18,5 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('author/create', 'AuthorController@create');
-Route::resource('author', 'AuthorController');
+// Route::get('/authors/create', 'AuthorController@create');
+Route::resource('authors', 'AuthorController');
